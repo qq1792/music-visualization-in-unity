@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
@@ -45,11 +45,12 @@ public class MusicVisulizer : MonoBehaviour
 				v = vValueSlider.value;
 				//Demo();
 		}
-
-		void Demo ()
+    void Demo ()
 		{
-				float[] spectrum = audio.GetSpectrumData (1024, 0, FFTWindow.BlackmanHarris);
-				int i = 1;
+        //float[] spectrum = audio.GetSpectrumData (1024, 0, FFTWindow.BlackmanHarris);
+        float[] spectrum = new float[256];
+        AudioListener.GetSpectrumData(spectrum, 0, FFTWindow.BlackmanHarris);
+        int i = 1;
 				while (i < 1023) {
 						Debug.DrawLine (new Vector3 (i - 1, spectrum [i], 0), new Vector3 (i, spectrum [i + 1], 0), Color.red);
 						Debug.DrawLine (new Vector3 (i - 1, Mathf.Log (spectrum [i - 1]) + 20, 2), new Vector3 (i, Mathf.Log (spectrum [i]) + 20, 2), Color.cyan);
@@ -63,10 +64,11 @@ public class MusicVisulizer : MonoBehaviour
     
 		void Visulization ()
 		{
-				int i = 2;	
-				float[] musicData = audio.GetSpectrumData (64, 0, FFTWindow.Triangle);
-
-				while (i<63) {
+				int i = 2;
+        //float[] musicData = audio.GetSpectrumData (64, 0, FFTWindow.Triangle);
+        float[] musicData = new float[256];
+        AudioListener.GetSpectrumData(musicData, 0, FFTWindow.Triangle);
+        while (i<63) {
 						h = musicData [i] * speed;
 	
 						bg.color= HSVtoRGB ( variation, s, v-0.03f, 1);
